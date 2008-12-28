@@ -1,0 +1,20 @@
+development:
+  adapter: mysql
+  database: rafflr
+  username: rafflr
+  password: rafflr
+  host: localhost
+
+test:
+  adapter: mysql
+  database: rafflr_test
+  username: rafflr
+  password: rafflr
+  host: localhost
+
+production:
+  adapter: mysql
+  database: rafflr
+  username: rafflr
+  password: rafflr
+  host: localhost

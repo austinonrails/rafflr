@@ -1,0 +1,19 @@
+# == Schema Information
+# Schema version: 2
+#
+# Table name: raffles
+#
+#  id         :integer(11)   not null, primary key
+#  title      :string(150)   
+#  created_on :datetime      
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  id: 1
+  created_on: <%= Date.parse("01/01/2006") %>
+  
+two:
+  id: 2
+  title: Test Raffle
+  created_on: <%= Date.parse("01/01/2006") %>

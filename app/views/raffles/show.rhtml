@@ -1,0 +1,34 @@
+<script type='text/javascript'>
+
+    var updater = new PeriodicalExecuter(
+        function() {
+            new Ajax.Request('<%= url_for(:action => 'raffle', :id => @raffle) %>', 
+                {
+                    asynchronous:true, 
+                    evalScripts:true, 
+                    onComplete:function(request){processAfterComplete()}
+                }
+            )
+        }, 2) // this 2 is the number of seconds to wait before calling "raffle" again
+    
+    // this gets called after every ajax call to "raffle" completes. Basically if there is only 1 user left
+    // we want to stop the periodic ajax call.. It might also be cool to do something fancy after we
+    // have a winner.. Maybe move the winner's name to the center of the screen and make it bigger.
+    function processAfterComplete()
+    {
+        var user_count = parseInt($('users_left').value);
+        if ( user_count <= 1 )
+        {
+            updater.stop();
+            // do something cool!
+        }
+    }
+</script>
+
+<h2><%= h @raffle.title %></h2>
+<div id="users">
+    <% for user in @users %>
+        <div id="user_<%= user.id %>"><%= h user.name %></div>
+    <% end %>
+</div>
+<input type="hidden" name="users_left" id="users_left" value="" />

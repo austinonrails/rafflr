@@ -1,0 +1,23 @@
+# == Schema Information
+# Schema version: 2
+#
+# Table name: users
+#
+#  id        :integer(11)   not null, primary key
+#  name      :string(150)   default(), not null
+#  raffle_id :integer(11)   not null
+#  winner    :boolean(1)    not null
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  id: 1
+  name: Shane Sherman
+  raffle_id: 1
+  winner: false
+  
+two:
+  id: 2
+  name: George Bush
+  raffle_id: 1
+  winner: false
