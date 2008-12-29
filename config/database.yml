@@ -1,8 +1,8 @@
 development:
   adapter: mysql
-  database: rafflr
+  database: rafflr_development
   username: root
-  password: 
+  password: mgd2nite
   host: localhost
 
 test:
