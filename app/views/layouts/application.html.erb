@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+       <title><%= h @page_title %> - Rafflr</title>
+       <meta name="viewport" content="width=320" />
+       <%= stylesheet_link_tag 'reset-min','fonts-min','grids-min','application' %>
+       <%= javascript_include_tag 'application','prototype','effects','controls','fireworks','soundmanager2' %>
+        <script type="text/javascript">
+          <%= @content_for_page_scripts %>
+        </script>
+    </head>
+    <body>
+        <div id="doc3" class="yui-t7">
+            <div id="hd">
+                <div id="site_title"><h1>Rafflr</h1></div>
+            </div>
+            <div id="bd">
+                <div class="yui-g">
+        	       <%= yield %>
+        	    </div> 
+            </div>
+            <div id="ft"></div>
+        </div>
+    </body>
+</html>

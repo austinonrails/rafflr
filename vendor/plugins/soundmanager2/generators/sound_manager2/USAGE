@@ -1,0 +1,14 @@
+Description:
+    Copies the SoundManager2 resource files into the correct place in your Rails working directory.
+
+Example:
+    ./script/generate sound_manager2
+
+    This will create:
+      public/soundmanager2.swf
+      public/javascripts/soundmanager2.js
+      public/javascripts/soundmanager2-jsmin.js
+      public/javascripts/soundmanager2-rails.js
+      public/images/SoundManager2/pause-control.gif
+      public/images/SoundManager2/play-control.gif
+

@@ -1,0 +1,16 @@
+<script type="application/javascript">
+  var timeout = setTimeout(process_client_side, 2000);
+  soundManager.onload = function() {
+    playMusic('/songs/Jeopardy.mp3');
+  }
+</script>
+
+<h2>Just Testing</h2>
+<div id="users">
+    <% 1.upto 8 do |i| %>
+        <div class="users" id="user_<%= i %>"><div>Test <%= i %></div></div>
+    <% end %>
+</div>
+<input type="hidden" name="number_of_winners" id="number_of_winners" value="1" />
+<br style="clear: both;"/>
+<div id="debug" style="display: none; width: 100%; height: 200px;"></div>
