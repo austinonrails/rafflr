@@ -31,3 +31,9 @@
     <% end %>
 </div>
 <input type="hidden" name="number_of_winners" id="number_of_winners" value="<%= @raffle.number_of_winners %>"/>
+<%# Fireworks aren't displaying when image loads are slow so get a move-on early %>
+<div style="display: none;">
+  <%- 0.upto(20) do |i| -%>
+    <img src="/images/fireworks/fw0/<%= i %>.gif"/>
+  <%- end -%>
+</div>
