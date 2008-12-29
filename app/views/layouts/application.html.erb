@@ -4,7 +4,10 @@
        <title><%= h @page_title %> - Rafflr</title>
        <meta name="viewport" content="width=320" />
        <%= stylesheet_link_tag 'reset-min','fonts-min','grids-min','application' %>
-       <%= javascript_include_tag 'application','prototype','effects','controls','fireworks','soundmanager2' %>
+       <%= javascript_include_tag 'application','prototype','effects','controls','soundmanager2' %>
+       <%= javascript_include_tag 'JSFX_Browser' %>
+       <%= javascript_include_tag 'JSFX_Layer' %>
+       <%= javascript_include_tag 'JSFX_Fireworks2' %>
         <script type="text/javascript">
           <%= @content_for_page_scripts %>
         </script>

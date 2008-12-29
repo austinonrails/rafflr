@@ -85,46 +85,62 @@ var dropout_effects =
 
   
 function declare_winners() {
-	
-  // Center the winners (there has to be an easier way than this)
+  center_winners();
+  start_user_effects();
+  start_page_effects();
+}
+
+// Move the winners to the middle of the page (there has to be an easier way than this)
+function center_winners() {
   Element.addClassName($('users'), "winners");
   var users = $$('.users');
   var width = 0;
-	var height = 0;
-	users.each(function(user) {
-		var dims = Element.getDimensions(user);
-		width += dims.width + 15;		// roughly 15 for the margin
-		height = Math.max(dims.height, height);
-	});
+  var height = 0;
+  users.each(function(user) {
+    var dims = Element.getDimensions(user);
+    width += dims.width + 15;   // roughly 15 for the margin
+    height = Math.max(dims.height, height);
+  });
   var viewDims = document.viewport.getDimensions();
   var left = (viewDims.width-width)/2;
   var top = (viewDims.height-height)/2 - height;
   new Effect.Move('users', {x: left, y: top, mode: 'absolute'});
-  
-  // Do crazy stuff to the winners, for now pulse for about 6 seconds
+}
+
+// Do crazy stuff to the winners, for now pulse for about 6 seconds
+function start_user_effects() {
   setTimeout(function() { 
     $$('.users').each(function(user) { 
       // Queue more effects here if it's not over the top enough already
       new Effect.Pulsate(user, { duration: 10, pulses: 20, queue: { position: 'end', scope: user.id } });
     });
   }, 1000);
-  
-  // Do crazy stuff to the page itself; wait the 6 seconds for the pulse, kill it after 10 seconds
-  if (typeof(JSFX) != 'undefined') {
-	  setTimeout(function() {
-	    new Effect.Morph(document.body, { style: { background: '#000'}, duration: 2}); // Nightfall
-	    
-	    var fireworks = JSFX.FireworkDisplay2(5, 3);
-	    setTimeout(function() {
-	      JSFX.FireworkDisplay2.running = false;
-	      if ($('new_raffle')) {
-	       Element.show($('new_raffle'));
-	      }
-	      setTimeout(function() { stopMusic(); new Effect.Morph(document.body, { style: { background: '#fff'}, duration: 2}); }, 2000);  // Daybreak
-	    }, 10000);
-	  }, 6000);
-  }
 }
+
+// Do crazy stuff to the page itself; wait the 6 seconds for the pulse, kill it after 10 seconds
+function start_page_effects() {
+	if (typeof(JSFX) != 'undefined') {
+		setTimeout(function() {
+			new Effect.Morph(document.body, { style: { background: '#000'}, duration: 2}); // Nightfall
+		  setTimeout(function() {
+		    stop_page_effects();
+		    JSFX.FireworkDisplay2.running = false;
+		  }, 10000);
+		  var fireworks = JSFX.FireworkDisplay2(5);
+		}, 6000);
+	}
+}
+
+function stop_page_effects() {
+	setTimeout(function() { 
+    new Effect.Morph(document.body, { style: { background: '#fff'}, duration: 2}); // Daybreak
+    stopMusic(); 
+    if ($('new_raffle')) {
+      Element.show('new_raffle');
+    }
+  }, 2000);  
+}
+
 
 /* For testing effects - this will randomly select losers without hitting the server */
 function process_client_side() { 
@@ -148,9 +164,7 @@ function playMusic(path_to_song) {
 
 function stopMusic() {
 	var count = 10;
-	setTimeout(function() { 
-		fadeSong(count);
-	}, 250);
+	setTimeout(function() { fadeSong(count); }, 250);
 }
 
 function fadeSong(count) {
