@@ -1,6 +1,7 @@
 BODY {
     PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; COLOR: #666; PADDING-TOP: 0px; 
     font-size: 100%;
+    overflow: hidden;
 }
 
 h1 { font-size: 190%; }
@@ -22,11 +23,11 @@ div.errorExplanation p em { color: #C00; font-style: normal; font-weight: bold; 
 div.errorExplanation h2 { font-size: 125%;font-weight: bold;}
 
 div.form-container form p { margin: 0; }
-div.form-container form p.note { margin-left: 75px; font-size: 90%; color: #333; }
+div.form-container form p.note { margin-left: 120px; font-size: 90%; color: #333; }
 div.form-container form fieldset { margin: 10px 0; padding: 10px; border: #AAA 1px solid;background-color:#efefef; }
 div.form-container form legend { font-weight: bold; color: #000; }
 div.form-container form fieldset div { padding: 0.25em 0; }
-div.form-container label { margin-right: 10px; padding-right: 10px; width: 50px; display: block; float: left; text-align: right; position: relative; }
+div.form-container label { margin-right: 10px; padding-right: 10px; width: 100px; display: block; float: left; text-align: right; position: relative; white-space: nowrap}
 div.form-container label.error,
 div.form-container span.error { color: #C00; }
 div.form-container label em { position: absolute; right: 0; font-size: 120%; font-style: normal; color: #C00; }
@@ -58,15 +59,51 @@ div#site_title h1 {
     font-weight: bold;
 }
 
+/* Scale effects don't play nicely with padding so use an inner div with margins instead */
 div#users div {
-    padding: .7em .5em .7em .5em;
     border: 2px dashed #ccc;
-    font-size: 200%;
+    font-size: 150%;
     margin: .3em;
     float: left;
     background-color: #efefef;
 }
 
-div#users {
-    
+div#users div div {
+  margin: .7em .5em .7em .5em;
+  border: 0;
+}
+
+div#users.winners div {
+  font-size: 150%;
+  margin: .3em;
+  border: 5px double red;
+  background-color: #ffff99;
+}
+
+div#users.winners div div {
+  margin: .7em .5em .7em .5em;
+  background-color: #ffff99;
+  border: 0;
+}
+
+div.raffles {
+}
+
+div.raffles div.raffle {
+  border: 1px solid  #BBBBBB;
+  background-color: #EFEFEF;
+  width: 50%;
+  padding: .5em;
+  margin-bottom: .8em;
+}
+
+div.raffles h1 {
+  color: #666;
+  font-size: 120%;
+  font-weight: bold;
+  margin-bottom: .5em;
+}
+
+span#new_raffle {
+	float: right;
 }

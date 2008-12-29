@@ -15,6 +15,10 @@ class Test::Unit::TestCase
   # in MySQL.  Turn off transactional fixtures in this case; however, if you
   # don't care one way or the other, switching from MyISAM to InnoDB tables
   # is recommended.
+  #
+  # The only drawback to using transactional fixtures is when you actually 
+  # need to test transactions.  Since your test is bracketed by a transaction,
+  # any transactions started in your code will be automatically rolled back.
   self.use_transactional_fixtures = true
 
   # Instantiated fixtures are slow, but give you @david where otherwise you
@@ -24,45 +28,13 @@ class Test::Unit::TestCase
   # then set this back to true.
   self.use_instantiated_fixtures  = false
 
-  def assert_invalid(model, attribute, *values)
-    if values.empty?
-      assert ! model.valid?, "Object is valid with value: #{model.send(attribute)}"
-      assert ! model.save, "Object saved."
-      assert model.errors.invalid?(attribute.to_s), "#{attribute} has no attached error"
-    else
-      values.flatten.each do |value|
-        obj = model.dup
-        obj.send("#{attribute}=", value)
-        assert_invalid obj, attribute
-      end
-    end
-  end
+  # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
+  #
+  # Note: You'll currently still have to declare fixtures explicitly in integration tests
+  # -- they do not yet inherit this setting
+  fixtures :all
 
-  def assert_valid(model, attribute=nil, *values)
-    if values.empty?
-      unless attribute.nil?
-        assert model.valid?, "Object is not valid with value: #{model.send(attribute)}"
-      else
-        assert model.valid?, model.errors.full_messages
-      end
-      assert model.errors.empty?, model.errors.full_messages
-    else
-      m = model.dup # the recursion was confusing mysql
-      values.flatten.each do |value|
-        obj = m.dup
-        obj.send("#{attribute}=", value)
-        assert_valid(obj, attribute)
-      end
-    end
-  end
-  
-  def logger
-    RAILS_DEFAULT_LOGGER
-  end
-
-  def string_with_length(x)
-    (0..x).to_a[0,(x+1)].join
-  end
+  # Add more helper methods to be used by all tests here...
   
   def assert_page_title_assigns_and_success(*assigns_names)
     assert assigns(:page_title), 'page_title should exist'
