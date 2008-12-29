@@ -1,0 +1,13 @@
+<%= link_to "New Raffle", new_raffle_url %>
+<hr/>
+<div class="raffles">
+<% for raffle in @raffles %>
+  <div class="raffle">
+    <h1><%= raffle.title %></h1>
+    <div class="winners">Winner<%= raffle.winners.size == 1 ? '' : 's' %>: 
+      <%= raffle.winners.collect { |user| user.name }.join(",") %>
+    </div>
+  </div>
+<% end %>
+</div>
+<%= will_paginate @raffles %>
