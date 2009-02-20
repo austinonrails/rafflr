@@ -3,6 +3,10 @@ class RafflesController < ApplicationController
   protect_from_forgery :only => [:create, :update, :destroy] 
 
   def index
+    render :layout => false
+  end
+
+  def list
     @page_title = "Rafflr"
     @raffles = Raffle.paginate :page => params[:page], :order => 'created_on DESC', :per_page => 5
   end
