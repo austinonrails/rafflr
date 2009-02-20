@@ -12,9 +12,13 @@ body {
 	text-align: center;
 	width: 100%;
 }
-.link {
+.link1 {
   text-decoration: none;
-  color: #0f0fa0;
+  color: #10a030;
+}
+.link2 {
+  text-decoration: none;
+  color: #a00f0f;
 }
 .link:hover {
   text-decoration: underline;
@@ -89,16 +93,17 @@ body {
 </div>
 <div id="link">
 	<a href="/list">Try Rafflr</a>
+	<div style="font-size: 12px; color: #666;">The exciting online version of eenie meanie miney moe</div>
 </div>
 </td>
 </tr>
 <tr>
 <td align="right">
 <div style="width: 150px; text-align: left">
-<a class="link" href="/list">Skip this nonsense</a>
+<a class="link1" href="/list">Skip this nonsense</a>
 <br/>
-<script>var repeat = false;</script>
-<a id="repeat" class="link" href="#" onclick="repeat=true; new Effect.Fade('repeat'); return false;">Do this again and again</a>
+<script>var repeat = false; var done = false;</script>
+<a id="repeat" class="link2" href="#" onclick="if (done) { window.location = '/?repeat'; } else { repeat=true; new Effect.Fade('repeat'); return false; }">Do this again and again</a>
 <div style="text-align: left">
 </td>
 </table>
@@ -156,8 +161,10 @@ body {
 							$$('.letter').each(function(item) {
 								new Effect.MoveBy(item,0, 40);
 							});
-              if (repeat) {
-                setTimeout(new function() { window.location = '/'; }, 1000);
+              if (repeat || window.location.search.indexOf('repeat') >= 0) {
+                setTimeout(function() { window.location = '/?repeat'; }, 5000);
+              } else {
+								done = true;
               }
 						}, 100); }
 				});
