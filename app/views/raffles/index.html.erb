@@ -7,6 +7,19 @@ body {
 	width: 99%;
 	overflow: hidden;
 }
+#footer {
+  color: #555;
+  font-size: 13px;
+  font-family: Tahoma;
+  white-space: nowrap;
+}
+#footer a, #footer a.visited {
+  color: maroon;
+  text-decoration: none;
+}
+#footer a:hover, #footer a.visited:hover {
+  text-decoration: underline;
+}
 #outer_container {
 	margin: auto;
 	text-align: center;
@@ -98,13 +111,24 @@ body {
 </td>
 </tr>
 <tr>
-<td align="right">
-<div style="width: 150px; text-align: left">
-<a class="link1" href="/list">skip this nonsense</a>
-<br/>
-<script>var repeat = false; var done = false;</script>
-<a id="repeat" class="link2" href="#" onclick="if (done) { window.location = '/?repeat'; } else { repeat=true; new Effect.Fade('repeat'); return false; }">do this again and again</a>
-<div style="text-align: left">
+<td align="center">
+  <table width="100%">
+    <tr>
+      <td width="25%"></td>
+      <td width="50%" align="center" id="footer">
+        Rafflr is an <a href="http://austinonrails.org">Austin on Rails</a> open source app.  Visit the <a href="http://github.com/austinonrails/rafflr">Github Repository</a>
+        <br/>
+        Created by <a href="http://twitter.com/damon">@damon</a>.&nbsp;&nbsp;
+        Gold-plating and feature creep by <a href="http://twitter.com/bdeter">@bdeter</a>.
+      </td>
+      <td align="right">
+        <a class="link1" href="/list">skip this nonsense</a>
+        <br/>
+        <script>var repeat = false; var done = false;</script>
+        <a id="repeat" class="link2" href="#" onclick="if (done) { window.location = '/?repeat'; } else { repeat=true; new Effect.Fade('repeat'); return false; }">do this again and again</a>
+      </td>
+    </tr>
+  </table>
 </td>
 </table>
 <script>
