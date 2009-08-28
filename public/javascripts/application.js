@@ -34,10 +34,10 @@ function dropout(element, next_round) {
       	// cleaning up and letting the remaining divs float left again.
       	setTimeout(function() { 
       		// Kick off the next round
-      		setTimeout(next_round, 1500);
+      		setTimeout(next_round, 15);
       		Element.hide(element); 
       		Element.remove('ghost'); 
-        }, 1000); }
+        }, 10); }
     });
 }
 
