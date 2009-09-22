@@ -15,6 +15,10 @@
                 <label for="number_of_winners"># of Winners</label>
                 <%= f.text_field :number_of_winners, :maxlength => 3, :size => 3 %>
             </div>
+            <div>
+                <label for="delay">Delay(ms)</label>
+                <%= text_field_tag :delay, @delay, {:size=>"4",:maxlength=>"4"}  %>
+            </div>
         </fieldset>
         <div>
             <%= submit_tag("Start the Raffle") %>

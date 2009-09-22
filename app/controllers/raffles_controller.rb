@@ -14,6 +14,7 @@ class RafflesController < ApplicationController
   def new
     @page_title = "New Raffle"
     @raffle = Raffle.new
+    @delay = 1500
   end
           
   def create
@@ -23,7 +24,7 @@ class RafflesController < ApplicationController
     users.each {|user| @raffle.users << User.new(:name => user, :raffle => @raffle)}
      
     if @raffle.save
-      redirect_to raffle_url(:id => @raffle)
+      redirect_to raffle_url(:id => @raffle, :delay => params[:delay] )
     else
       render :action => 'new'
     end

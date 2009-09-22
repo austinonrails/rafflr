@@ -20,6 +20,9 @@
   function remove_user(user_id) {
     process(user_id, next_round);
   }
+  <% if params[:delay] %>
+    nextRoundDelayMs = '<%= params[:delay] %>';
+  <% end %>
     
 </script>
 

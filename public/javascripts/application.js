@@ -1,3 +1,5 @@
+var nextRoundDelayMs = 1500;
+var nextRoundTimerDelayMs = 10;
 /* Either drop out a user or declare a winner; next_round is the function that gets the next user */
 function process(user_id, next_round) { 
   var users = $$('.users');
@@ -34,10 +36,10 @@ function dropout(element, next_round) {
       	// cleaning up and letting the remaining divs float left again.
       	setTimeout(function() { 
       		// Kick off the next round
-      		setTimeout(next_round, 1500);
+      		setTimeout(next_round, nextRoundDelayMs);
       		Element.hide(element); 
       		Element.remove('ghost'); 
-        }, 1000); }
+        }, nextRoundTimerDelayMs); }
     });
 }
 
