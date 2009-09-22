@@ -1,5 +1,5 @@
 var nextRoundDelayMs = 1500;
-var nextRoundTimerDelayMs = 10;
+var nextRoundTimerDelayMs = 1;
 /* Either drop out a user or declare a winner; next_round is the function that gets the next user */
 function process(user_id, next_round) { 
   var users = $$('.users');
@@ -67,21 +67,21 @@ var dropout_effects =
 	[
 	  function(element) {
 	  	return [
-	     new Effect.MoveBy(element, 500, 0, { sync: true }),
-	     new Effect.Opacity(element, { sync: true, to: 0.0, from: 1.0 } )
+	     new Effect.MoveBy(element, 500, 0, { sync: true, duration:.2 }),
+	     new Effect.Opacity(element, { sync: true, to: 0.0, from: 1.0, duration:.2 } )
 	    ];
 	  },
 	  function(element) {
-	    return new Effect.Shrink(element, { sync: true });
+	    return new Effect.Shrink(element, { sync: true, duration:.2 });
 	  },
 	  function(element) {
-	    return new Effect.Squish(element, { sync: true });
+	    return new Effect.Squish(element, { sync: true, duration:.2 });
 	  },
 	  function(element) {
-	    return new Effect.Puff(element, { sync: true });
+	    return new Effect.Puff(element, { sync: true, duration:.2 });
 	  },
     function(element) {
-      return new Effect.Fold(element, { sync: true });
+      return new Effect.Fold(element, { sync: true, duration:.2 });
     }
 	];
 
