@@ -1,11 +1,26 @@
+var nextRoundDelayMs = 1500;
+var nextRoundTimerDelayMs = 1;
 /* Either drop out a user or declare a winner; next_round is the function that gets the next user */
-function process(user_id, next_round) { 
+function process(user_id, next_round, extra_user) { 
   var users = $$('.users');
   var user = $('user_'+user_id);
   Element.removeClassName(user, 'users');
-  if (users.length-1 == parseInt($('number_of_winners').value)) {
+  var losers = 1;
+  if (extra_user) {
+    losers++;
+    var user2 = $('user_' + extra_user);
+    Element.removeClassName(user2, 'users');
+  }
+
+  if (users.length-losers == parseInt($('number_of_winners').value)) {
+    if (extra_user) {
+      dropout(user2);
+    }
     dropout(user, declare_winners);
   } else {
+    if (extra_user) {
+      dropout(user2);
+    }
     dropout(user, next_round);
   }
 }
@@ -32,12 +47,14 @@ function dropout(element, next_round) {
       afterFinish: function(effect) { 
       	// Even though the effects are supposed to be done here, it looks better to wait a second before
       	// cleaning up and letting the remaining divs float left again.
-      	setTimeout(function() { 
-      		// Kick off the next round
-      		setTimeout(next_round, 15);
-      		Element.hide(element); 
-      		Element.remove('ghost'); 
-        }, 10); }
+          setTimeout(function() { 
+            // Kick off the next round
+            if (next_round) {
+              setTimeout(next_round, nextRoundDelayMs);
+            }
+            Element.hide(element); 
+            Element.remove('ghost'); 
+          }, nextRoundTimerDelayMs); }
     });
 }
 
@@ -65,21 +82,21 @@ var dropout_effects =
 	[
 	  function(element) {
 	  	return [
-	     new Effect.MoveBy(element, 500, 0, { sync: true }),
-	     new Effect.Opacity(element, { sync: true, to: 0.0, from: 1.0 } )
+	     new Effect.MoveBy(element, 500, 0, { sync: true, duration:.2 }),
+	     new Effect.Opacity(element, { sync: true, to: 0.0, from: 1.0, duration:.2 } )
 	    ];
 	  },
 	  function(element) {
-	    return new Effect.Shrink(element, { sync: true });
+	    return new Effect.Shrink(element, { sync: true, duration:.2 });
 	  },
 	  function(element) {
-	    return new Effect.Squish(element, { sync: true });
+	    return new Effect.Squish(element, { sync: true, duration:.2 });
 	  },
 	  function(element) {
-	    return new Effect.Puff(element, { sync: true });
+	    return new Effect.Puff(element, { sync: true, duration:.2 });
 	  },
     function(element) {
-      return new Effect.Fold(element, { sync: true });
+      return new Effect.Fold(element, { sync: true, duration:.2 });
     }
 	];
 

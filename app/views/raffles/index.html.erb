@@ -1,13 +1,199 @@
-<%= link_to "New Raffle", new_raffle_url %>
-<hr/>
-<div class="raffles">
-<% for raffle in @raffles %>
-  <div class="raffle">
-    <h1><%= raffle.title %></h1>
-    <div class="winners">Winner<%= raffle.winners.size == 1 ? '' : 's' %>: 
-      <%= raffle.winners.collect { |user| user.name }.join(",") %>
-    </div>
-  </div>
-<% end %>
+<html>
+<head>
+<%= javascript_include_tag 'prototype','effects' %>
+<style>
+body {
+	height: 98%;
+	width: 99%;
+	overflow: hidden;
+}
+#footer {
+  color: #555;
+  font-size: 13px;
+  font-family: Tahoma;
+  white-space: nowrap;
+}
+#footer a, #footer a.visited {
+  color: maroon;
+  text-decoration: none;
+}
+#footer a:hover, #footer a.visited:hover {
+  text-decoration: underline;
+}
+#outer_container {
+	margin: auto;
+	text-align: center;
+	width: 100%;
+}
+.link1 {
+  text-decoration: none;
+  color: #10a030;
+}
+.link2 {
+  text-decoration: none;
+  color: #a00f0f;
+}
+.link:hover {
+  text-decoration: underline;
+}
+#container {
+	text-align: left;
+	width: 600px;
+	height: 150px;
+	border: 3px double red;
+	margin: auto;
+	padding: 50px 20px 0px 50px;
+	background-color: #ffff99
+}
+.letter {
+	font-size: 65px;
+	font-weight: bold;
+	font-family: Comic Sans MS, Impact;
+	top: 40;
+	margin-right: 20px;
+	text-align: center;
+	left: 20;
+	display: inline;
+}
+#r1,#r2,#r3,#r4,#r5,#r6,#r7 {
+	display: inline;
+	padding: 0;
+	margin: 0;
+	color: blue;
+}
+#link {
+	margin-top: 50px;
+	font-size: 70px;
+	font-color: black;
+	font-family: Verdana;
+	color: red;
+	top: 40;
+}
+#link a {
+	color: maroon;
+}
+#link a:hover {
+	color: blue;
+}
+</style>
+</head>
+<body>
+<table width="100%" height="100%" style="padding: 10px">
+<tr><td height="100%" valign="top">
+<div id="outer_container">
+<div id="container">
+<div class="letter" style=""> 
+	<div id="r1" style="">R</div>
 </div>
-<%= will_paginate @raffles %>
+<div class="letter" style="">
+	<div id="r2" style="">A</div>
+</div>
+<div class="letter" style="">
+	<div id="r3" style="">F</div>
+</div>
+<div class="letter" style="">
+	<div id="r4" style="">F</div>
+</div>
+<div class="letter" style="">
+	<div id="r5" style="">L</div>
+</div>
+<div class="letter" style="">
+	<div id="r6" style="">E</div>
+</div>
+<div class="letter" style="">
+	<div id="r7" style="">R</div>
+</div>
+</div>
+<div id="link">
+	<a href="/list">Try Rafflr</a>
+	<div style="font-size: 12px; color: #666;">The exciting online version of eeny meeny miny moe</div>
+</div>
+</td>
+</tr>
+<tr>
+<td align="center">
+  <table width="100%">
+    <tr>
+      <td width="25%"></td>
+      <td width="50%" align="center" id="footer">
+        Rafflr is an <a href="http://austinonrails.org">Austin on Rails</a> open source app.  Visit the <a href="http://github.com/austinonrails/rafflr">Github Repository</a>
+        <br/>
+        Created by <a href="http://twitter.com/damon">@damon</a>.&nbsp;&nbsp;
+        Gold-plating and feature creep by <a href="http://twitter.com/bdeter">@bdeter</a>.
+      </td>
+      <td align="right">
+        <a class="link1" href="/list">skip this nonsense</a>
+        <br/>
+        <script>var repeat = false; var done = false;</script>
+        <a id="repeat" class="link2" href="#" onclick="if (done) { window.location = '/?repeat'; } else { repeat=true; new Effect.Fade('repeat'); return false; }">do this again and again</a>
+      </td>
+    </tr>
+  </table>
+</td>
+</table>
+<script>
+	window.onload = function() {
+		Element.hide('link');
+		var a = new Array();
+		$$('.letter').each(function(item) {
+			a.push(item);
+		});
+		a.reverse();
+		a.each(function(item) {
+			Position.absolutize(item);
+		});
+		$$('.letter div').each(function(item) {
+			Position.absolutize(item);
+			Element.hide(item);
+			Element.setStyle(item, {'display':'none'});
+			Element.setStyle(item, {'visibility':''});
+		});
+		setTimeout(function() {
+			new Effect.Appear('r1');
+		}, 1000);
+		setTimeout(function() {
+			new Effect.Appear('r4');
+		}, 2000);
+		setTimeout(function() {
+			new Effect.Appear('r7');
+		}, 3000);
+		setTimeout(function() {
+			new Effect.Appear('r2');
+		}, 4000);
+		setTimeout(function() {
+			new Effect.Appear('r6');
+		}, 5000);
+		setTimeout(function() {
+			new Effect.Appear('r3');
+		}, 6000);
+		setTimeout(function() {
+			new Effect.Appear('r5');
+		}, 7000);
+
+		setTimeout(function() {
+			new Effect.Parallel(
+				[
+					new Effect.MoveBy('r6', 500, 0, { sync: true }),
+					new Effect.Opacity('r6', { sync: true, to: 0.0, from: 1.0 } )
+				], 
+				{
+					afterFinish: function(effect) {
+						setTimeout(function() {
+							Element.hide('r6');
+							new Effect.MoveBy('r7', 0, -80);
+							new Effect.Appear('link');
+							$$('.letter').each(function(item) {
+								new Effect.MoveBy(item,0, 40);
+							});
+              if (repeat || window.location.search.indexOf('repeat') >= 0) {
+                setTimeout(function() { window.location = '/?repeat'; }, 5000);
+              } else {
+								done = true;
+              }
+						}, 100); }
+				});
+		}, 10000);
+	};
+</script>
+</body>
+</html>

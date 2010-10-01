@@ -3,6 +3,10 @@ class RafflesController < ApplicationController
   protect_from_forgery :only => [:create, :update, :destroy] 
 
   def index
+    render :layout => false
+  end
+
+  def list
     @page_title = "Rafflr"
     @raffles = Raffle.paginate :page => params[:page], :order => 'created_on DESC', :per_page => 5
   end
@@ -10,16 +14,18 @@ class RafflesController < ApplicationController
   def new
     @page_title = "New Raffle"
     @raffle = Raffle.new
+    @delay = 1500
   end
           
   def create
     @raffle = Raffle.new(params[:raffle])
     @users = params[:users]
+    @delay = params[:delay]
     users = @users.gsub("\r","").split("\n").map{|u| u.strip}
     users.each {|user| @raffle.users << User.new(:name => user, :raffle => @raffle)}
      
     if @raffle.save
-      redirect_to raffle_url(:id => @raffle)
+      redirect_to raffle_url(:id => @raffle, :delay => @delay )
     else
       render :action => 'new'
     end
@@ -31,6 +37,7 @@ class RafflesController < ApplicationController
     @raffle = Raffle.find(params[:id])
     @users = @raffle.users
     @users.each { |user| user.winner = false; user.save }
+    @delay = params[:delay]
     session[:users] = @users # going to need this in "raffle"
     session[:number_of_winners] = @raffle.number_of_winners.to_i
     @page_title = "#{@raffle.title}"
@@ -41,10 +48,18 @@ class RafflesController < ApplicationController
     
     # randomize the users
     session[:users] = session[:users].sort_by { rand }
+    @delay = params[:delay] || '1'
+    @delay = @delay.to_i
     
     begin
       # haha you're a loser
       loser = session[:users].pop
+      loser2id = 'null'
+      if @delay < 1 
+        if session[:users].size > session[:number_of_winners]
+          loser2id = session[:users].pop.id
+        end
+      end
       begin
         session[:users].each do |user|
           user.winner = true
@@ -53,7 +68,7 @@ class RafflesController < ApplicationController
       end if (session[:users].size == session[:number_of_winners])
       
       render :update do |page|
-        page << "remove_user(#{loser.id})" # remove the user from the page
+        page << "remove_user(#{loser.id}, #{loser2id})" # remove the user from the page
       end
     end if session[:users].size > session[:number_of_winners]
   

@@ -35,6 +35,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # See how all your routes lay out with "rake routes"
   map.home '', :controller => 'raffles', :action => 'index'
+  map.list 'list', :controller => 'raffles', :action => 'list'
   map.resources :raffles
 
   # Install the default routes as the lowest priority.

@@ -2,14 +2,14 @@
 
   // Kick things off; the process function will kick off each
   // subsequent round after all the special effects are complete.    
-  setTimeout(next_round, 2000);
+  setTimeout(next_round, 500);
   soundManager.onload = function() {
     playMusic('/songs/Jeopardy.mp3');
   }
     
   function next_round() {
     // Controller will call the remove_user function with the next user id
-      new Ajax.Request('<%= url_for(:action => 'raffle', :id => @raffle) %>', 
+    new Ajax.Request('<%= url_for(:action => 'raffle', :id => @raffle, :delay => @delay) %>', 
           {
               asynchronous:true, 
               evalScripts:true
@@ -17,9 +17,12 @@
       );
   }
   
-  function remove_user(user_id) {
-    process(user_id, next_round);
+  function remove_user(user_id, extra_user) {
+    process(user_id, next_round, extra_user);
   }
+  <% if params[:delay] %>
+    nextRoundDelayMs = '<%= params[:delay] %>';
+  <% end %>
     
 </script>
 
